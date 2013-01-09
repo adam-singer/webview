@@ -1,2 +1,4 @@
+.buildlog
 pubspec.lock
 packages/
+out/
