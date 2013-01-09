@@ -27,41 +27,17 @@ class Webview extends WebComponent {
     });
   }
   
-  void removed() {
-    js.scoped(() {
-      _onEvent.dispose();
-    });
-  }
+  void removed() => js.scoped(() => _onEvent.dispose());
 
-  void back() {
-    js.scoped(() {
-      js.context.webview.back();
-    });
-  }
+  void back() => js.scoped(() => js.context.webview.back());
   
-  void forward() {
-    js.scoped(() {
-      js.context.webview.forward();      
-    });
-  }
+  void forward() => js.scoped(() => js.context.webview.forward());
+
+  void reload() => js.scoped(() => js.context.webview.reload());
   
-  void reload() {
-    js.scoped(() {
-      js.context.webview.reload();      
-    });
-  }
+  void stop() => js.scoped(() => js.context.webview.stop());
   
-  void stop() {
-    js.scoped(() {
-      js.context.webview.stop();      
-    });
-  }
-  
-  void terminate() {
-    js.scoped(() {
-      js.context.webview.terminate();      
-    });
-  }
+  void terminate() => js.scoped(() => js.context.webview.terminate());
   
   bool _dispatch(e) {    
     // TODO: the set of events is known (we have the code) so we should just
