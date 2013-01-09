@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html>
+  <body>
+    <element name="x-webview" constructor="Webview" extends="div">
+      <template>
+        <webview src="{{src}}">
+        </webview>
+        <span template if="!isSupported">
+          Sorry, but webview is only suported in
+          <a href="http://developer.chrome.com/apps/about_apps.html">
+            Chrome Apps
+          </a>.
+        </span>
+      </template>
+      <script type="application/dart" src="webview.dart"></script>
+    </element>    
+  </body>
+</html>

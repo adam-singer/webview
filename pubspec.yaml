@@ -1,0 +1,7 @@
+name: webview
+version: 0.0.1-dev
+description: A web component to wrap the chrome app webview element.
+author: Ross Smith <ross.dart.lang@gmail.com>
+dependencies:
+  js: 0.0.13
+  web_ui: 0.2.11

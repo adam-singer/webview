@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>browser</title>
+    <link rel="stylesheet" href="browser.css">
+    <link rel="components" href="../../lib/webview.html">
+  </head>
+  <body>    
+    <div id="controls">
+      <button id="back" title="Go Back">&#9664;</button>
+      <button id="forward" title="Go Forward">&#9654;</button>
+      <button id="home" title="Go Home">&#8962;</button>
+      <button id="reload" title="Reload">&#10227;</button>
+      <button id="terminate" title="Simulate Crash">&#9760;</button>
+      
+      <form id="location-form">
+        <div id="center-column">
+          <input id="location" type="text" value="http://www.google.com/">
+        </div>
+        <input type="submit" value="Go">
+      </form>
+    </div>
+    
+    <x-webview></x-webview>
+
+    <div id="sad-webview">
+      <div id="sad-webview-icon">&#9762;</div>
+      <h2 id="crashed-label">Aw, Snap!</h2>
+      <h2 id="killed-label">He's Dead, Jim!</h2>
+
+      <p>Something went wrong while displaying this webpage.
+      To continue, reload or go to another page.</p>
+    </div>
+
+    <script type="text/javascript" src="dart.js"></script>
+    <script type="text/javascript" src="dart_interop.js"></script>
+    <!-- TODO(rms): this is a temporary workaround for:
+    https://github.com/dart-lang/web-ui/issues/293
+    -->
+    <script type="text/javascript" src="webview.js"></script>
+    <script type="application/dart" src="browser.dart"></script>
+  </body>
+</html>
