@@ -53,8 +53,13 @@ onLoad() {
 
 handleExit(event) {
   var detail = JSON.parse(event.detail);
-  print('webview fired exit with ${detail['reason']}');
-  // TODO: 
+  print('webview fired exit with ${detail}');
+  document.body.classes.add('exited');
+  if (detail['reason'] == 'abnormal') {
+    document.body.classes.add('crashed');
+  } else if (detail['reason'] == 'killed') {
+    document.body.classes.add('killed');
+  }
 }
 
 handleLoadAbort(event) {
@@ -63,11 +68,10 @@ handleLoadAbort(event) {
 }
 
 handleLoadCommit(event) {
-  print('webview fired load commit');
+  var detail = JSON.parse(event.detail);
+  print('webview fired load commit with ${detail}');
   
   resetExitedState();
-  
-  var detail = JSON.parse(event.detail);
   
   if (!detail['isTopLevel']) return;
 
