@@ -52,7 +52,8 @@ onLoad() {
 }
 
 handleExit(event) {
-  print('webview fired exit');
+  var detail = JSON.parse(event.detail);
+  print('webview fired exit with ${detail['reason']}');
   // TODO: 
 }
 

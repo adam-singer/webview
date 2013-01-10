@@ -28,6 +28,8 @@ class Webview extends WebComponent {
   bool _isSupported = false;
   bool get isSupported => _isSupported;
   
+  int get processId => js.scoped(() => js.context.webview.getProcessId());
+  
   js.Callback _onEvent;
   
   void inserted() {
