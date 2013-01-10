@@ -21,35 +21,44 @@ class Webview extends WebComponent {
   // TODO: src should be a 2-way binding
   String get src => 'http://www.google.com';
   
-  bool get canGoBack => js.scoped(() => js.context.webview.canGoBack());
+  bool get canGoBack => js.scoped(() => _webview.canGoBack());
   
-  bool get canGoForward => js.scoped(() => js.context.webview.canGoForward());
+  bool get canGoForward => js.scoped(() => _webview.canGoForward());
   
   bool _isSupported = false;
   bool get isSupported => _isSupported;
   
-  int get processId => js.scoped(() => js.context.webview.getProcessId());
+  int get processId => js.scoped(() => _webview.getProcessId());
   
   js.Callback _onEvent;
+  js.Proxy _webview;
   
   void inserted() {
     js.scoped(() {
       _onEvent = new js.Callback.many(_dispatch);
-      _isSupported = js.context.webview.init(_onEvent);
+      _webview = js.retain(js.context.webview);
+      _isSupported = _webview.init(_onEvent);
     });
+    // TODO(rms): can I inject something like:
+    // <script src="packages/webview/webview.js">
   }
   
-  void removed() => js.scoped(() => _onEvent.dispose());
+  void removed() {
+    js.scoped(() {
+      _onEvent.dispose();
+      js.release(_webview);
+    });
+  }
 
-  void back() => js.scoped(() => js.context.webview.back());
+  void back() => js.scoped(() => _webview.back());  
   
-  void forward() => js.scoped(() => js.context.webview.forward());
-
-  void reload() => js.scoped(() => js.context.webview.reload());
+  void forward() => js.scoped(() => _webview.forward());
   
-  void stop() => js.scoped(() => js.context.webview.stop());
+  void reload() => js.scoped(() => _webview.reload());  
   
-  void terminate() => js.scoped(() => js.context.webview.terminate());
+  void stop() => js.scoped(() => _webview.stop());  
+  
+  void terminate() => js.scoped(() => _webview.terminate());
   
   bool _dispatch(e) {
     // TODO(rms): explore better ways to do this
