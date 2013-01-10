@@ -8,6 +8,16 @@ import 'package:web_ui/web_ui.dart';
 
 class Webview extends WebComponent {
  
+  const Map _WEB_VIEW_EVENTS = const { 
+    'exit' : const ['processId', 'reason'],
+    'loadabort' : const ['url', 'isTopLevel', 'reason'],
+    'loadcommit' : const ['url', 'isTopLevel'],
+    'loadredirect' : const ['oldUrl', 'newUrl', 'isTopLevel'],
+    'loadstart' : const ['url', 'isTopLevel'],
+    'loadstop' : const [],
+    'sizechanged': const ['oldHeight', 'oldWidth', 'newHeight', 'newWidth']
+  };
+  
   // TODO: src should be a 2-way binding
   String get src => 'http://www.google.com';
   
@@ -39,23 +49,25 @@ class Webview extends WebComponent {
   
   void terminate() => js.scoped(() => js.context.webview.terminate());
   
-  bool _dispatch(e) {    
-    // TODO: the set of events is known (we have the code) so we should just
-    // inspect e.type and assume the known details
-    
-    // TODO(rms): try to improve this hack.    
-    var detail = new Map();    
-    _tryPut(detail, 'isTopLevel', () => e.isTopLevel);
-    _tryPut(detail, 'url', () => e.url);
-    
-    // TODO(rms): open an issue report regarding the need for 'this' below.
-    this.on[e.type].dispatch(
+  bool _dispatch(e) {
+    // TODO(rms): explore better ways to do this
+    var detail = new Map();
+    var props = _WEB_VIEW_EVENTS[e.type];
+    for(var p in props) {      
+      switch(p) {
+        case 'isTopLevel' : detail['isTopLevel'] = e.isTopLevel; break;  
+        case 'oldHeight' : detail['oldHeight'] = e.oldHeight; break;
+        case 'oldUrl' : detail['oldUrl'] = e.oldUrl; break;
+        case 'oldWidth' : detail['oldWidth'] = e.oldWidth; break;
+        case 'newHeight' : detail['newHeight'] = e.newHeight; break;
+        case 'newUrl' : detail['newUrl'] = e.newUrl; break;
+        case 'newWidth' : detail['newWidth'] = e.newWidth; break;
+        case 'processId' : detail['processId'] = e.processId; break;
+        case 'reason' : detail['reason'] = e.reason; break;
+        case 'url': detail['url'] = e.url; break;
+      }
+    }      
+    on[e.type].dispatch(
       new CustomEvent(e.type, e.bubbles, e.cancelable, JSON.stringify(detail))); 
   }
-  
-  bool _tryPut(Map map, String key, Function getValue) {
-    try {
-      map[key] = getValue();
-    } on NoSuchMethodError catch(e) { }
-  }  
 }
