@@ -8,7 +8,7 @@ import 'package:web_ui/web_ui.dart';
 
 class Webview extends WebComponent {
  
-  const Map _WEB_VIEW_EVENTS = const { 
+  const Map _EVENTS = const { 
     'exit' : const ['processId', 'reason'],
     'loadabort' : const ['url', 'isTopLevel', 'reason'],
     'loadcommit' : const ['url', 'isTopLevel'],
@@ -52,7 +52,7 @@ class Webview extends WebComponent {
   bool _dispatch(e) {
     // TODO(rms): explore better ways to do this
     var detail = new Map();
-    var props = _WEB_VIEW_EVENTS[e.type];
+    var props = _EVENTS[e.type];
     for(var p in props) {      
       switch(p) {
         case 'isTopLevel' : detail['isTopLevel'] = e.isTopLevel; break;  
