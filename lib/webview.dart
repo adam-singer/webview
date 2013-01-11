@@ -5,10 +5,11 @@ import 'dart:html';
 import 'dart:json';
 import 'package:js/js.dart' as js;
 import 'package:web_ui/web_ui.dart';
+import 'package:web_ui/watcher.dart' as watcher;
 
 class Webview extends WebComponent {
  
-  const Map _EVENTS = const { 
+  static const Map _EVENTS = const { 
     'exit' : const ['processId', 'reason'],
     'loadabort' : const ['url', 'isTopLevel', 'reason'],
     'loadcommit' : const ['url', 'isTopLevel'],
@@ -33,14 +34,21 @@ class Webview extends WebComponent {
   js.Callback _onEvent;
   js.Proxy _webview;
   
-  void inserted() {
-    js.scoped(() {
-      _onEvent = new js.Callback.many(_dispatch);
-      _webview = js.retain(js.context.webview);
-      _isSupported = _webview.init(_onEvent);
-    });
-    // TODO(rms): can I inject something like:
-    // <script src="packages/webview/webview.js">
+  void inserted() {    
+    // TODO: check first if the document already has the script
+    var script = new ScriptElement();
+    script.type = "text/javascript";
+    script.src = "packages/webview/webview.js";
+    document.body.append(script);
+    
+    script.on.load.add((e) {
+      js.scoped(() {
+        _onEvent = new js.Callback.many(_dispatch);
+        _webview = js.retain(js.context.webview);
+        _isSupported = _webview.init(_onEvent);
+        watcher.dispatch();
+      });
+    });   
   }
   
   void removed() {
