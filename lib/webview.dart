@@ -26,7 +26,7 @@ class Webview extends WebComponent {
   
   bool get canGoForward => js.scoped(() => _webview.canGoForward());
   
-  bool _isSupported = false;
+  bool _isSupported = true;
   bool get isSupported => _isSupported;
   
   int get processId => js.scoped(() => _webview.getProcessId());
