@@ -1,4 +1,6 @@
 
 # Browser
 
-TODO: port the browser example (js) from chrome apps repo
+This is a port to dart of the Chrome Apps' [browser]
+(https://github.com/GoogleChrome/chrome-app-samples/tree/master/browser)
+sample.
