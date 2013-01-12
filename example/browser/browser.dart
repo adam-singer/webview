@@ -64,7 +64,6 @@ handleExit(event) {
 
 handleLoadAbort(event) {
   print('webview fired load abort');
-  // TODO: 
 }
 
 handleLoadCommit(event) {
@@ -84,13 +83,27 @@ handleLoadCommit(event) {
 }
 
 handleLoadRedirect(event) {
-  print('webview fired load redirect');
-  // TODO: 
+  var detail = JSON.parse(event.detail);
+  print('webview fired load redirect with ${detail}');
+  
+  resetExitedState();
+  
+  if (!detail['isTopLevel']) return;
+
+  (document.query('#location') as InputElement).value = detail['newUrl'];
 }
 
 handleLoadStart(event) {
-  print('webview fired load start');
-  // TODO: 
+  var detail = JSON.parse(event.detail);
+  print('webview fired load start with ${detail}');
+  
+  document.body.classes.add('loading');
+  isLoading = true;  
+  resetExitedState();
+  
+  if (!detail['isTopLevel']) return;
+
+  (document.query('#location') as InputElement).value = detail['url'];
 }
 
 handleLoadStop(event) {
@@ -102,8 +115,8 @@ handleLoadStop(event) {
 }
 
 navigateTo(url) {
-  // TODO:
-  //resetExitedState();
+  resetExitedState();
+  // TODO: we need a 2-way binding on src
   //document.querySelector('webview').src = url;
 }
 
