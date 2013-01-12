@@ -116,8 +116,7 @@ handleLoadStop(event) {
 
 navigateTo(url) {
   resetExitedState();
-  // TODO: we need a 2-way binding on src
-  //document.querySelector('webview').src = url;
+  document.query('x-webview').xtag.src = url;
 }
 
 resetExitedState() {

@@ -19,9 +19,13 @@ class Webview extends WebComponent {
     'sizechanged': const ['oldHeight', 'oldWidth', 'newHeight', 'newWidth']
   };
   
-  // TODO: src should be a 2-way binding
-  String get src => 'http://www.google.com';
-  
+  String _src = '';
+  String get src => _src;
+         set src(value) {
+    _src = value; 
+    watcher.dispatch();
+  }
+         
   bool get canGoBack => js.scoped(() => _webview.canGoBack());
   
   bool get canGoForward => js.scoped(() => _webview.canGoForward());
