@@ -23,16 +23,18 @@
       </form>
     </div>
     
-    <x-webview src="{{'http://www.google.com/'}}"></x-webview>
+    <div id="content">
+      <x-webview src="{{'http://www.google.com/'}}"></x-webview>
+    
+      <div id="sad-webview">
+        <div id="sad-webview-icon">&#9762;</div>
+        <h2 id="crashed-label">Aw, Snap!</h2>
+        <h2 id="killed-label">He's Dead, Jim!</h2>
 
-    <div id="sad-webview">
-      <div id="sad-webview-icon">&#9762;</div>
-      <h2 id="crashed-label">Aw, Snap!</h2>
-      <h2 id="killed-label">He's Dead, Jim!</h2>
-
-      <p>Something went wrong while displaying this webpage.
-      To continue, reload or go to another page.</p>
-    </div>
+        <p>Something went wrong while displaying this webpage.
+        To continue, reload or go to another page.</p>
+      </div>
+    </div>    
 
     <script type="text/javascript" src="packages/browser/dart.js"></script>
     <script type="text/javascript" src="packages/js/dart_interop.js"></script>   
