@@ -104,12 +104,8 @@ class Webview extends WebComponent {
   }
   
   _call(f()) {
-    if(!isSupported) {
-      throw new UnsupportedError('Webview is only supported in Chrome Apps.');
-    }
-    if(_webview == null) {
-      throw new StateError('Webview not initialized.');
-    }
+    if(!isSupported) throw new UnsupportedError('Webview is not supported.');
+    if(_webview == null) throw new StateError('Webview not initialized.');
     return js.scoped(f);
   }
 }
