@@ -105,7 +105,7 @@ class Webview extends WebComponent {
   
   _call(f()) {
     if(!isSupported) throw new UnsupportedError('Webview is not supported.');
-    if(_webview == null) throw new StateError('Webview not initialized.');
+    if(_webview == null) throw new StateError('Webview is not initialized.');
     return js.scoped(f);
   }
 }
