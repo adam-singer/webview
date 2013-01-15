@@ -26,14 +26,22 @@ class Webview extends WebComponent {
     watcher.dispatch();
   }
          
-  bool get canGoBack => js.scoped(() => _webview.canGoBack());
+  bool get canGoBack => _call(() => _webview.canGoBack());
   
-  bool get canGoForward => js.scoped(() => _webview.canGoForward());
+  bool get canGoForward => _call(() => _webview.canGoForward());
+  
+  _Window _contentWindow;
+  WindowBase get contentWindow {
+    if(_contentWindow == null) {
+      _contentWindow = _call(() => new _Window(_webview.contentWindow()));
+    }
+    return _contentWindow;
+  }
   
   bool _isSupported = true;
   bool get isSupported => _isSupported;
   
-  int get processId => js.scoped(() => _webview.getProcessId());
+  int get processId => _call(() => _webview.getProcessId());
   
   js.Callback _onEvent;
   js.Proxy _webview;
@@ -49,7 +57,7 @@ class Webview extends WebComponent {
       js.scoped(() {
         _onEvent = new js.Callback.many(_dispatch);
         _webview = js.retain(js.context.webview);
-        _isSupported = _webview.init(_onEvent);        
+        _isSupported = _webview.init(_onEvent);
       });
       watcher.dispatch();
     });   
@@ -59,18 +67,19 @@ class Webview extends WebComponent {
     js.scoped(() {
       _onEvent.dispose();
       js.release(_webview);
+      if(_contentWindow != null) _contentWindow._dispose();
     });
   }
 
-  void back() => js.scoped(() => _webview.back());  
+  void back() => _call(() => _webview.back());  
   
-  void forward() => js.scoped(() => _webview.forward());
+  void forward() => _call(() => _webview.forward());
   
-  void reload() => js.scoped(() => _webview.reload());  
+  void reload() => _call(() => _webview.reload());  
   
-  void stop() => js.scoped(() => _webview.stop());  
+  void stop() => _call(() => _webview.stop());  
   
-  void terminate() => js.scoped(() => _webview.terminate());
+  void terminate() => _call(() => _webview.terminate());
   
   bool _dispatch(e) {
     // TODO(rms): explore better ways to do this
@@ -92,5 +101,42 @@ class Webview extends WebComponent {
     }      
     on[e.type].dispatch(
       new CustomEvent(e.type, e.bubbles, e.cancelable, JSON.stringify(detail))); 
+  }
+  
+  _call(f()) {
+    if(!isSupported) {
+      throw new UnsupportedError('Webview is only supported in Chrome Apps.');
+    }
+    if(_webview == null) {
+      throw new StateError('Webview method cannot be called in this state.');
+    }
+    return js.scoped(f);
+  }
+}
+
+class _Window implements WindowBase {
+  
+  bool get closed => js.scoped(() => _proxy.closed);  
+  
+  HistoryBase get history { throw new UnimplementedError(); }
+  
+  LocationBase get location { throw new UnimplementedError(); }
+  
+  WindowBase get opener { throw new UnimplementedError(); }
+  
+  WindowBase get parent { throw new UnimplementedError(); }
+  
+  WindowBase get top { throw new UnimplementedError(); }
+  
+  js.Proxy _proxy;
+  
+  _Window(js.Proxy proxy) {_proxy = js.retain(proxy); }
+  
+  void _dispose() => js.release(_proxy);
+  
+  void close() => js.scoped(() => _proxy.close()); 
+
+  void postMessage(message, String targetOrigin, [List messagePorts]) {
+    throw new UnimplementedError();
   }
 }
