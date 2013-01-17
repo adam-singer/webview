@@ -38,6 +38,8 @@ class Webview extends WebComponent {
     return _contentWindow;
   }
   
+  bool get isLoaded => _webview != null;
+  
   bool _isSupported = true;
   bool get isSupported => _isSupported;
   
@@ -60,6 +62,7 @@ class Webview extends WebComponent {
         _isSupported = _webview.init(_onEvent);
       });
       watcher.dispatch();
+      _dispatch(e);
     });   
   }
   
@@ -84,28 +87,30 @@ class Webview extends WebComponent {
   bool _dispatch(e) {
     // TODO(rms): explore better ways to do this
     var detail = new Map();
-    var props = _EVENTS[e.type];
-    for(var p in props) {      
-      switch(p) {
-        case 'isTopLevel' : detail['isTopLevel'] = e.isTopLevel; break;  
-        case 'oldHeight' : detail['oldHeight'] = e.oldHeight; break;
-        case 'oldUrl' : detail['oldUrl'] = e.oldUrl; break;
-        case 'oldWidth' : detail['oldWidth'] = e.oldWidth; break;
-        case 'newHeight' : detail['newHeight'] = e.newHeight; break;
-        case 'newUrl' : detail['newUrl'] = e.newUrl; break;
-        case 'newWidth' : detail['newWidth'] = e.newWidth; break;
-        case 'processId' : detail['processId'] = e.processId; break;
-        case 'reason' : detail['reason'] = e.reason; break;
-        case 'url': detail['url'] = e.url; break;
-      }
-    }      
+    if(_EVENTS.containsKey(e.type)) {
+      var props = _EVENTS[e.type];
+      for(var p in props) {      
+        switch(p) {
+          case 'isTopLevel' : detail['isTopLevel'] = e.isTopLevel; break;  
+          case 'oldHeight' : detail['oldHeight'] = e.oldHeight; break;
+          case 'oldUrl' : detail['oldUrl'] = e.oldUrl; break;
+          case 'oldWidth' : detail['oldWidth'] = e.oldWidth; break;
+          case 'newHeight' : detail['newHeight'] = e.newHeight; break;
+          case 'newUrl' : detail['newUrl'] = e.newUrl; break;
+          case 'newWidth' : detail['newWidth'] = e.newWidth; break;
+          case 'processId' : detail['processId'] = e.processId; break;
+          case 'reason' : detail['reason'] = e.reason; break;
+          case 'url': detail['url'] = e.url; break;
+        }
+      }      
+    }
     on[e.type].dispatch(
       new CustomEvent(e.type, e.bubbles, e.cancelable, JSON.stringify(detail))); 
   }
   
   _call(f()) {
     if(!isSupported) throw new UnsupportedError('Webview is not supported.');
-    if(_webview == null) throw new StateError('Webview is not initialized.');
+    if(!isLoaded) throw new StateError('Webview is not loaded.');
     return js.scoped(f);
   }
 }
