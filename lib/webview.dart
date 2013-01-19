@@ -48,7 +48,7 @@ class Webview extends WebComponent {
   js.Callback _onEvent;
   js.Proxy _webview;
   
-  void inserted() {    
+  void inserted() {
     // TODO: check first if the document already has the script
     var script = new ScriptElement();
     script.type = "text/javascript";
@@ -58,12 +58,13 @@ class Webview extends WebComponent {
     script.on.load.add((e) {
       js.scoped(() {
         _onEvent = new js.Callback.many(_dispatch);
-        _webview = js.retain(js.context.webview);
-        _isSupported = _webview.init(_onEvent);
+        _webview = js.retain(
+            new js.Proxy(js.context.Webview, children[1].id, _onEvent));
+        _isSupported = js.context.isWebviewSupported();
       });
       watcher.dispatch();
       _dispatch(e);
-    });   
+    });
   }
   
   void removed() {
