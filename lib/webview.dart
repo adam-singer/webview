@@ -59,7 +59,7 @@ class Webview extends WebComponent {
       js.scoped(() {
         _onEvent = new js.Callback.many(_dispatch);
         _webview = js.retain(
-            new js.Proxy(js.context.Webview, children[1].id, _onEvent));
+            new js.Proxy(js.context.Webview, children[1], _onEvent));
         _isSupported = js.context.isWebviewSupported();
       });
       watcher.dispatch();
