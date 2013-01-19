@@ -20,7 +20,7 @@ class Webview extends WebComponent {
   };
 
   // TODO(rms): adding the js script is async; try to either inject it earlier
-  // like at library load time or see if there is anyway to make it sync.
+  // like at library load time or see if there is any way to make it sync.
   static bool _injected = false;
   static _inject(then) {
     if(_injected) then();
