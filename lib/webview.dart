@@ -36,10 +36,9 @@ class Webview extends WebComponent {
   
   String _src = '';
   String get src => isLoaded ? _call(() => _webview.getSrc()) : _src;
-         set src(value) {    
-    _src = value;  
-    if (isLoaded) _call(() => _webview.setSrc(_src));
-    watcher.dispatch();
+         set src(value) {      
+    if (isLoaded) _call(() => _webview.setSrc(value));
+    else _src = value;
   }
          
   bool get canGoBack => _call(() => _webview.canGoBack());
@@ -67,10 +66,10 @@ class Webview extends WebComponent {
   void inserted() {
     _inject(() {
       js.scoped(() {
+        _isSupported = js.context.isWebviewSupported();
         _onEvent = new js.Callback.many(_dispatch);
         _webview = js.retain(
             new js.Proxy(js.context.Webview, children[1], _onEvent));
-        _isSupported = js.context.isWebviewSupported();
       });
       watcher.dispatch();
     });
