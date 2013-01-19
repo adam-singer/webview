@@ -18,6 +18,21 @@ class Webview extends WebComponent {
     'loadstop' : const [],
     'sizechanged': const ['oldHeight', 'oldWidth', 'newHeight', 'newWidth']
   };
+
+  // TODO(rms): adding the js script is async; try to either inject it earlier
+  // like at library load time or see if there is anyway to make it sync.
+  static bool _injected = false;
+  static _inject(then) {
+    if(_injected) then();
+    else {
+      var script = new ScriptElement();
+      script.type = "text/javascript";
+      script.src = "packages/webview/webview.js";        
+      script.on.load.add((e) => then());    
+      document.body.append(script);
+      _injected = true;
+    }
+  }
   
   String _src = '';
   String get src => _src;
@@ -49,13 +64,7 @@ class Webview extends WebComponent {
   js.Proxy _webview;
   
   void inserted() {
-    // TODO: check first if the document already has the script
-    var script = new ScriptElement();
-    script.type = "text/javascript";
-    script.src = "packages/webview/webview.js";
-    document.body.append(script);
-    
-    script.on.load.add((e) {
+    _inject(() {
       js.scoped(() {
         _onEvent = new js.Callback.many(_dispatch);
         _webview = js.retain(
@@ -63,7 +72,6 @@ class Webview extends WebComponent {
         _isSupported = js.context.isWebviewSupported();
       });
       watcher.dispatch();
-      _dispatch(e);
     });
   }
   
@@ -88,22 +96,20 @@ class Webview extends WebComponent {
   bool _dispatch(e) {
     // TODO(rms): explore better ways to do this
     var detail = new Map();
-    if(_EVENTS.containsKey(e.type)) {
-      var props = _EVENTS[e.type];
-      for(var p in props) {      
-        switch(p) {
-          case 'isTopLevel' : detail['isTopLevel'] = e.isTopLevel; break;  
-          case 'oldHeight' : detail['oldHeight'] = e.oldHeight; break;
-          case 'oldUrl' : detail['oldUrl'] = e.oldUrl; break;
-          case 'oldWidth' : detail['oldWidth'] = e.oldWidth; break;
-          case 'newHeight' : detail['newHeight'] = e.newHeight; break;
-          case 'newUrl' : detail['newUrl'] = e.newUrl; break;
-          case 'newWidth' : detail['newWidth'] = e.newWidth; break;
-          case 'processId' : detail['processId'] = e.processId; break;
-          case 'reason' : detail['reason'] = e.reason; break;
-          case 'url': detail['url'] = e.url; break;
-        }
-      }      
+    var props = _EVENTS[e.type];
+    for(var p in props) {      
+      switch(p) {
+        case 'isTopLevel' : detail['isTopLevel'] = e.isTopLevel; break;  
+        case 'oldHeight' : detail['oldHeight'] = e.oldHeight; break;
+        case 'oldUrl' : detail['oldUrl'] = e.oldUrl; break;
+        case 'oldWidth' : detail['oldWidth'] = e.oldWidth; break;
+        case 'newHeight' : detail['newHeight'] = e.newHeight; break;
+        case 'newUrl' : detail['newUrl'] = e.newUrl; break;
+        case 'newWidth' : detail['newWidth'] = e.newWidth; break;
+        case 'processId' : detail['processId'] = e.processId; break;
+        case 'reason' : detail['reason'] = e.reason; break;
+        case 'url': detail['url'] = e.url; break;
+      }
     }
     on[e.type].dispatch(
       new CustomEvent(e.type, e.bubbles, e.cancelable, JSON.stringify(detail))); 
