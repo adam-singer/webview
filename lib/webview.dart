@@ -35,9 +35,10 @@ class Webview extends WebComponent {
   }
   
   String _src = '';
-  String get src => _src;
-         set src(value) {
-    _src = value; 
+  String get src => isLoaded ? _call(() => _webview.getSrc()) : _src;
+         set src(value) {    
+    _src = value;  
+    if (isLoaded) _call(() => _webview.setSrc(_src));
     watcher.dispatch();
   }
          
