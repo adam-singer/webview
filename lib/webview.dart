@@ -21,6 +21,9 @@ class Webview extends WebComponent {
 
   // TODO(rms): adding the js script is async; try to either inject it earlier
   // like at library load time or see if there is any way to make it sync.
+  // Also, the js interop library manages not to inject if the user brings it
+  // into their entry point with a script tag - we should support that as well!
+  // right now, this code assumes it is the only code injecting the script.
   static bool _injected = false;
   static _inject(then) {
     if(_injected) then();
@@ -55,6 +58,7 @@ class Webview extends WebComponent {
   
   bool get isLoaded => _webview != null;
   
+  // TODO(rms): call this 'supported' to be more darty, and make it static
   bool _isSupported = true;
   bool get isSupported => _isSupported;
   
