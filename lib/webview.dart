@@ -30,9 +30,12 @@ class Webview extends WebComponent {
       // Test if the js script is already injected.
       try {
         _supported = js.scoped(() => js.context.isWebviewSupported());
-        // Webview.js is injected, continue.        
-        then();
-      } catch (e) {
+        // If no error is thrown above then webview.js is injected.
+        _injected = true;
+      } catch(e) {}
+      
+      if(_injected) then();
+      else {
         // Webview.js is not yet injected, so append it to body.
         var script = new ScriptElement();
         script.type = "text/javascript";
@@ -43,7 +46,6 @@ class Webview extends WebComponent {
           then();
         });    
         document.body.append(script);
-      } finally {
         _injected = true;
       }
     }
@@ -65,6 +67,7 @@ class Webview extends WebComponent {
   bool get canGoForward => _call(() => _webview.canGoForward());
   
   _Window _contentWindow;
+  /// Gets the window object of this webview.
   WindowBase get contentWindow {
     if(_contentWindow == null) {
       _contentWindow = _call(() => new _Window(_webview.contentWindow()));
