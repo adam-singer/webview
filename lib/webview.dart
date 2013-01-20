@@ -106,6 +106,12 @@ class Webview extends WebComponent {
   
   void terminate() => _call(() => _webview.terminate());
   
+  _call(f()) {
+    if(!supported) throw new UnsupportedError('Webview is not supported.');
+    if(!available) throw new StateError('Webview instance is not available.');
+    return js.scoped(f);
+  }
+  
   bool _dispatch(e) {
     // TODO(rms): explore better ways to do this
     var detail = new Map();
@@ -126,12 +132,6 @@ class Webview extends WebComponent {
     }
     on[e.type].dispatch(
       new CustomEvent(e.type, e.bubbles, e.cancelable, JSON.stringify(detail))); 
-  }
-  
-  _call(f()) {
-    if(!supported) throw new UnsupportedError('Webview is not supported.');
-    if(!available) throw new StateError('Webview instance is not available.');
-    return js.scoped(f);
   }
 }
 
