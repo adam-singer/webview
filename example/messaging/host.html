@@ -18,15 +18,14 @@
                  disabled="{{!enabled}}">
         </div>
         <input type="submit" 
-               value="Go" 
+               value="Send" 
                disabled="{{!enabled}}" 
                on-click="onSubmit($event)">
       </form>
     </div>
     
     <div id="content">
-      <!-- TODO: how to set the src without hardcoding an absolute path? -->
-      <x-webview src="{{'http://127.0.0.1:3030/D:/github/webview/example/messaging/out/example/messaging/peer.html'}}">
+      <x-webview src="{{contentUrl}}">
       </x-webview>
     </div>    
 
