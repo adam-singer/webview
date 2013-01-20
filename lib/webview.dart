@@ -158,6 +158,8 @@ class _Window implements WindowBase {
   void close() => js.scoped(() => _proxy.close()); 
 
   void postMessage(message, String targetOrigin, [List messagePorts]) {
-    throw new UnimplementedError();
+      if(?messagePorts)
+        throw new UnsupportedError("messagePorts are not supported.");
+      js.scoped(() => _proxy.postMessage(message, targetOrigin));
   }
 }
