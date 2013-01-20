@@ -2,6 +2,8 @@
 
 ## 0.0.3-dev
 
+- Made `supported` getter `static` and renamed it from `isSupported` to align
+with the similar changes being made in `dart:html` library.
 - Added `available` getter.  The first `Webview` to be inserted in the DOM will
 inject the js script, which is an async operation.  Therefore, the `Webview` API
 may not be immediately available to the user and `available` should be polled.
