@@ -2,6 +2,7 @@
 import 'dart:html';
 import 'dart:isolate';
 import 'dart:json';
+import 'package:js/js.dart' as js;
 import 'package:web_ui/watcher.dart' as watcher;
 
 bool enabled = false;
@@ -13,10 +14,14 @@ main() {
   new Timer(0, (t) {
     var webview = document.query('x-webview').xtag;
     webview.on['loadcommit'].add(onLoadCommit);
-    
-    // TODO: build content url of the form:
+        
+    // TODO(rms): We would like to build a content url of the form:
     // 'chrome-extension://<extensionID>/<pathToFile>' as described:
     // http://developer.chrome.com/extensions/overview.html
+    // But it seems this does not yet work, track this issue:
+    // http://code.google.com/p/chromium/issues/detail?id=157626
+    // contentUrl = js.scoped(() => 
+    //   js.context.chrome.runtime.getURL("out/example/messaging/peer.html"));        
     contentUrl = 'http://127.0.0.1:3030/D:/github/webview/example/messaging/out/example/messaging/peer.html';
     watcher.dispatch();
   });
