@@ -13,7 +13,9 @@ insertion in the DOM, you may include the `webview.js` script directly in your
 entry point html:
 `<script type="text/javascript" src="packages/webview/webview.js"></script>`
 
-- Support getting the `contentWindow` of a `Webview`.
+- Support getting the `contentWindow` of a `Webview`.  The `contentWindow` is
+of type `WindowBase` and you may use `postMessage` to communicate with the
+`Webview`.
 
 ## 0.0.2
 
