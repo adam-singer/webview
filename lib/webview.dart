@@ -20,8 +20,9 @@ class Webview extends WebComponent {
   };
   
   static bool _supported = true;
+  /// Gets whether or not the webview element is supported by the platform.
   static bool get supported => _supported;
-
+  
   static bool _injected = false;
   static _inject(then) {
     if(_injected) then();
@@ -49,11 +50,15 @@ class Webview extends WebComponent {
   }
 
   String _src = '';
-  String get src => loaded ? _call(() => _webview.getSrc()) : _src;
+  String get src => available ? _call(() => _webview.getSrc()) : _src;
          set src(value) {      
-    if (loaded) _call(() => _webview.setSrc(value));
+    if (available) _call(() => _webview.setSrc(value));
     else _src = value;
   }
+         
+  /// Gets whether this webview instance is available;  The webview is available
+  /// once it is inserted in the DOM _and_ the javascript behavior is loaded.
+  bool get available => _webview != null;
          
   bool get canGoBack => _call(() => _webview.canGoBack());
   
@@ -67,8 +72,6 @@ class Webview extends WebComponent {
     return _contentWindow;
   }
   
-  bool get loaded => _webview != null;
-    
   int get processId => _call(() => _webview.getProcessId());
   
   js.Callback _onEvent;
@@ -127,7 +130,7 @@ class Webview extends WebComponent {
   
   _call(f()) {
     if(!supported) throw new UnsupportedError('Webview is not supported.');
-    if(!loaded) throw new StateError('Webview is not loaded.');
+    if(!available) throw new StateError('Webview instance is not available.');
     return js.scoped(f);
   }
 }
