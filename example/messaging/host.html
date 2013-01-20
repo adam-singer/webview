@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>messaging</title>
+    <link rel="components" href="packages/webview/webview.html">
+  </head>
+  <body>    
+    <div id="host">
+      <span>TODO: host controls</span>
+    </div>
+    
+    <div id="content">
+      <!-- TODO: how to set the src without hardcoding an absolute path? -->
+      <x-webview src="{{'http://127.0.0.1:3030/D:/github/webview/example/messaging/out/example/messaging/peer.html'}}">
+      </x-webview>
+    </div>    
+
+    <script type="text/javascript" src="packages/browser/dart.js"></script>
+    <script type="text/javascript" src="packages/js/dart_interop.js"></script>   
+    <script type="application/dart" src="host.dart"></script>
+  </body>
+</html>
