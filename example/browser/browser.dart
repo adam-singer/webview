@@ -53,7 +53,6 @@ onLoad() {
 
 handleExit(event) {
   var detail = JSON.parse(event.detail);
-  print('webview fired exit with ${detail}');
   document.body.classes.add('exited');
   if (detail['reason'] == 'abnormal') {
     document.body.classes.add('crashed');
@@ -62,13 +61,10 @@ handleExit(event) {
   }
 }
 
-handleLoadAbort(event) {
-  print('webview fired load abort');
-}
+handleLoadAbort(event) { }
 
 handleLoadCommit(event) {
   var detail = JSON.parse(event.detail);
-  print('webview fired load commit with ${detail}');
   
   resetExitedState();
   
@@ -84,7 +80,6 @@ handleLoadCommit(event) {
 
 handleLoadRedirect(event) {
   var detail = JSON.parse(event.detail);
-  print('webview fired load redirect with ${detail}');
   
   resetExitedState();
   
@@ -95,8 +90,7 @@ handleLoadRedirect(event) {
 
 handleLoadStart(event) {
   var detail = JSON.parse(event.detail);
-  print('webview fired load start with ${detail}');
-  
+
   document.body.classes.add('loading');
   isLoading = true;  
   resetExitedState();
@@ -106,9 +100,7 @@ handleLoadStart(event) {
   (document.query('#location') as InputElement).value = detail['url'];
 }
 
-handleLoadStop(event) {
-  print('webview fired load stop');
-  
+handleLoadStop(event) {  
   // We don't remove the loading class immediately, instead we let the animation
   // finish, so that the spinner doesn't jerkily reset back to the 0 position.
   isLoading = false;
