@@ -18,29 +18,40 @@ class Webview extends WebComponent {
     'loadstop' : const [],
     'sizechanged': const ['oldHeight', 'oldWidth', 'newHeight', 'newWidth']
   };
+  
+  static bool _supported = true;
+  static bool get supported => _supported;
 
-  // TODO(rms): adding the js script is async; try to either inject it earlier
-  // like at library load time or see if there is any way to make it sync.
-  // Also, the js interop library manages not to inject if the user brings it
-  // into their entry point with a script tag - we should support that as well!
-  // right now, this code assumes it is the only code injecting the script.
   static bool _injected = false;
   static _inject(then) {
     if(_injected) then();
     else {
-      var script = new ScriptElement();
-      script.type = "text/javascript";
-      script.src = "packages/webview/webview.js";        
-      script.on.load.add((e) => then());    
-      document.body.append(script);
-      _injected = true;
+      // Test if the js script is already injected.
+      try {
+        _supported = js.scoped(() => js.context.isWebviewSupported());
+        // Webview.js is injected, continue.        
+        then();
+      } catch (e) {
+        // Webview.js is not yet injected, so append it to body.
+        var script = new ScriptElement();
+        script.type = "text/javascript";
+        script.src = "packages/webview/webview.js";
+        script.on.load.add((e) {
+          // Script loaded, check support and continue.
+          _supported = js.scoped(() => js.context.isWebviewSupported());
+          then();
+        });    
+        document.body.append(script);
+      } finally {
+        _injected = true;
+      }
     }
   }
-  
+
   String _src = '';
-  String get src => isLoaded ? _call(() => _webview.getSrc()) : _src;
+  String get src => loaded ? _call(() => _webview.getSrc()) : _src;
          set src(value) {      
-    if (isLoaded) _call(() => _webview.setSrc(value));
+    if (loaded) _call(() => _webview.setSrc(value));
     else _src = value;
   }
          
@@ -56,12 +67,8 @@ class Webview extends WebComponent {
     return _contentWindow;
   }
   
-  bool get isLoaded => _webview != null;
-  
-  // TODO(rms): call this 'supported' to be more darty, and make it static
-  bool _isSupported = true;
-  bool get isSupported => _isSupported;
-  
+  bool get loaded => _webview != null;
+    
   int get processId => _call(() => _webview.getProcessId());
   
   js.Callback _onEvent;
@@ -70,7 +77,6 @@ class Webview extends WebComponent {
   void inserted() {
     _inject(() {
       js.scoped(() {
-        _isSupported = js.context.isWebviewSupported();
         _onEvent = new js.Callback.many(_dispatch);
         _webview = js.retain(
             new js.Proxy(js.context.Webview, children[1], _src, _onEvent));
@@ -120,8 +126,8 @@ class Webview extends WebComponent {
   }
   
   _call(f()) {
-    if(!isSupported) throw new UnsupportedError('Webview is not supported.');
-    if(!isLoaded) throw new StateError('Webview is not loaded.');
+    if(!supported) throw new UnsupportedError('Webview is not supported.');
+    if(!loaded) throw new StateError('Webview is not loaded.');
     return js.scoped(f);
   }
 }
