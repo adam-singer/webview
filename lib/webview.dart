@@ -53,8 +53,8 @@ class Webview extends WebComponent {
   /// Reflects the src HTML attribute, containing the address of the content to
   /// be embedded.
   String get src => available ? _call(() => _webview.getSrc()) : _src;
-         set src(value) => available ? _call(() => _webview.setSrc(value)) :
-                                       _src = value;
+         set src(value) => 
+             available ? _call(() => _webview.setSrc(value)) : _src = value;
          
   /// Gets whether this webview instance is available;  The webview is available
   /// once it is inserted in the DOM _and_ the javascript behavior is loaded.
