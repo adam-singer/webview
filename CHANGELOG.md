@@ -9,8 +9,7 @@ All API calls prior to `available == true` will throw a `StateError`.  To avoid
 polling for `available` and ensure the `Webview` is immediately available upon
 insertion in the DOM, you may include the `webview.js` script directly in your
 entry point html:
-
-  `<script type="text/javascript" src="packages/webview/webview.js"></script>`
+`<script type="text/javascript" src="packages/webview/webview.js"></script>`
 
 - Support getting the `contentWindow` of a `Webview`.
 
