@@ -4,11 +4,24 @@
   <head>
     <meta charset="utf-8">
     <title>messaging</title>
+    <link rel="stylesheet" href="host.css">
     <link rel="components" href="packages/webview/webview.html">
   </head>
-  <body>    
+  <body>
     <div id="host">
-      <span>TODO: host controls</span>
+      <form id="message-form">
+        <div id="center-column">
+          <input id="message" 
+                 type="text" 
+                 bind-value="message"
+                 placeholder="type a message to send"
+                 disabled="{{!enabled}}">
+        </div>
+        <input type="submit" 
+               value="Go" 
+               disabled="{{!enabled}}" 
+               on-click="onSubmit($event)">
+      </form>
     </div>
     
     <div id="content">
