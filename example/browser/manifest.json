@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Browser",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "icons": {
     "16": "icon_16.png",
     "128": "icon_128.png"
