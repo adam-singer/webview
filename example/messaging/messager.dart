@@ -2,6 +2,7 @@
 library messager;
 
 import 'dart:html';
+import 'dart:json';
 import 'package:web_ui/web_ui.dart';
 import 'package:web_ui/watcher.dart' as watcher;
 
@@ -9,6 +10,7 @@ class Messager extends WebComponent {
   
   bool get hasTarget => target != null;
   String message = '';
+  String name = '';
   
   List received = new List();
   
@@ -20,23 +22,25 @@ class Messager extends WebComponent {
              }
   
   void inserted() {
-    window.on.message.add((e) {       
-      
+    window.on.message.add((e) {             
       // If we don't yet have a target, grab the source of this message.
       if(!hasTarget) target = e.source;
       
+      var data = JSON.parse(e.data);
       var date = new Date.now();
       
-      // TODO: parse e.data as json and extract 'sender', 'message'
-      
-      received.addLast([e.source, e.data, '${date.hour}:${date.minute}']);
+      received.addLast([data['sender'], data['message'], 
+                        '${date.hour}:${date.minute}']);
       watcher.dispatch();
     });
   }
   
   onSubmit(event) { 
     event.preventDefault();
-    target.postMessage(message, '*');
+    var data = new Map();
+    data['sender'] = name;
+    data['message'] = message;    
+    target.postMessage(JSON.stringify(data), '*');
     message = '';
   }
 }
