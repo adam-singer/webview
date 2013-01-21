@@ -20,7 +20,7 @@ main() {
     // http://code.google.com/p/chromium/issues/detail?id=157626
     // contentUrl = js.scoped(() => 
     //   js.context.chrome.runtime.getURL("out/example/messaging/peer.html"));        
-    contentUrl = 'http://127.0.0.1:3030/D:/github/webview/example/messaging/out/example/messaging/peer.html';
+    contentUrl = 'http://127.0.0.1:3030/D:/github/webview/example/messaging/out/example/messaging/embed.html';
     watcher.dispatch();
   });
 }
