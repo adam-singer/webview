@@ -4,9 +4,20 @@
   <head>
     <meta charset="utf-8">
     <title>peer</title>
+    <link rel="stylesheet" href="peer.css">
   </head>
   <body>    
-    <span>TODO: embedded content!</span>  
+    <div>Messages received:</div>  
+    
+    <table>
+      <tbody template iterate='message in messages'>
+        <tr>
+          <td>host:</td>
+          <td>{{message[0]}}</td>
+          <td>{{message[1]}}</td>
+        </tr>
+      </tbody>      
+    </table>
 
     <script type="text/javascript" src="packages/browser/dart.js"></script>
     <script type="application/dart" src="peer.dart"></script>

@@ -42,4 +42,5 @@ onSubmit(event) {
   event.preventDefault();
   var webview = document.query('x-webview').xtag;
   webview.contentWindow.postMessage(message, '*');
+  message = '';
 }
