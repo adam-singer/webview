@@ -7,4 +7,4 @@ element.
 Webview uses the MIT license as described in the LICENSE file, and
 [semantic versioning](http://semver.org/).
 
-## TODO: more documentation and examples coming soon!
+## TODO: more documentation coming soon!
