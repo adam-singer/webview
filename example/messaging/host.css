@@ -1,6 +1,13 @@
 
-body {
-  margin: 0;
-  padding: 0;
+html, body {
+  height: 100%;
   font-family: Lucida Grande, Arial, sans-serif;
+}
+
+#messager {
+  height:50%;  
+}
+
+#webview {
+  height:50%;
 }

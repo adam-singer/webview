@@ -5,26 +5,16 @@
     <meta charset="utf-8">
     <title>peer</title>
     <link rel="stylesheet" href="peer.css">
+    <link rel="components" href="messager.html">
   </head>
-  <body>    
-
-    <div id="receive">
-      <table>
-        <tbody template iterate='message in messages'>
-          <tr>
-            <td>host:</td>
-            <td>{{message[0]}}</td>
-            <td>{{message[1]}}</td>
-          </tr>
-        </tbody>      
-      </table>
-    </div>
+  <body>
     
-    <div id="send">
-      <div>TODO: send controls</div>
-    </div>
-
+    <x-messager>
+    </x-messager>
+    
     <script type="text/javascript" src="packages/browser/dart.js"></script>
-    <script type="application/dart" src="peer.dart"></script>
+    <script type="application/dart">
+    main() {}    
+    </script>
   </body>
 </html>

@@ -10,11 +10,15 @@
   </head>
   <body>
     
-    <x-messager>
-    </x-messager>
+    <div id="messager">
+      <x-messager>
+      </x-messager>
+    </div>
     
-    <x-webview src="{{contentUrl}}">
-    </x-webview>   
+    <div id="webview">
+      <x-webview src="{{contentUrl}}">
+      </x-webview>   
+    </div>
 
     <script type="text/javascript" src="packages/browser/dart.js"></script>
     <script type="text/javascript" src="packages/js/dart_interop.js"></script> 
