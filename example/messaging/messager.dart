@@ -7,7 +7,7 @@ import 'package:web_ui/watcher.dart' as watcher;
 
 class Messager extends WebComponent {
   
-  bool get enabled => target != null;
+  bool get hasTarget => target != null;
   String message = '';
   
   List received = new List();
@@ -21,6 +21,10 @@ class Messager extends WebComponent {
   
   void inserted() {
     window.on.message.add((e) {       
+      
+      // If we don't yet have a target, grab the source of this message.
+      if(!hasTarget) target = e.source;
+      
       var date = new Date.now();
       
       // TODO: parse e.data as json and extract 'sender', 'message'

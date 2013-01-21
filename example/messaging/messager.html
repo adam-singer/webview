@@ -87,11 +87,11 @@
                        type="text" 
                        bind-value="message"
                        placeholder="type a message to send"
-                       disabled="{{!enabled}}">
+                       disabled="{{!hasTarget}}">
               </div>
               <input type="submit" 
                      value="Send" 
-                     disabled="{{!enabled}}" 
+                     disabled="{{!hasTarget}}" 
                      on-click="onSubmit($event)">
             </form>
           </div>
