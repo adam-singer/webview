@@ -1,6 +1,6 @@
 # Webview Changes
 
-## 0.0.3-dev
+## 0.0.3
 
 - Added [messaging][] example to demonstrate bidirectional communication between
 a Chrome App and the content of a `Webview` using `postMessage`.
