@@ -8,7 +8,7 @@ chrome.app.runtime.onLaunched.addListener(function() {
 	
   // Notice that we launch the dwc (web ui compiler) generated html
   
-  chrome.app.window.create('out/example/messaging/host.html', {
+  chrome.app.window.create('out/example/messaging/app.html', {
     'width': 1024,
     'height': 768
   });
