@@ -5,8 +5,6 @@ import 'dart:json';
 import 'package:js/js.dart' as js;
 import 'package:web_ui/watcher.dart' as watcher;
 
-bool enabled = false;
-String message = '';
 String contentUrl = '';
 
 main() {
@@ -30,17 +28,8 @@ main() {
 onLoadCommit(event) {  
   var detail = JSON.parse(event.detail);
   if (!detail['isTopLevel']) return;
-  // Once the embedded content has finished loading, we enable message sending.
-  enabled = true;
-  // We need to manually dispatch watchers because this event listener is not
-  // bound through html template.  
-  // TODO(rms): investigate binding to custom events in web ui html templates.
-  watcher.dispatch();
-}
-
-onSubmit(event) { 
-  event.preventDefault();
-  var webview = document.query('x-webview').xtag;
-  webview.contentWindow.postMessage(message, '*');
-  message = '';
+  // Once the embedded content has finished loading, we grab the contentWindow
+  // off of the webview and use it to initialize the messager
+  var contentWindow = document.query('x-webview').xtag.contentWindow;
+  document.query('x-messager').xtag.target = contentWindow;
 }

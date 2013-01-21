@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+  
+<html>
+  <body>
+    <element name="x-messager" constructor="Messager" extends="div">
+      <template>
+        <style scoped>
+          #send {
+            padding: 3px;
+            border-bottom: solid 1px #ccc;
+            display: -webkit-flex;
+            -webit-flex-direction: column;
+          }
+
+          #send button,
+          #send input {
+            font-size: 14px;
+            line-height: 24px;
+            border-radius: 2px;
+            padding: 0 6px;
+          }
+          
+          button,
+          input[type="submit"],
+          button[disabled]:hover {
+            border: solid 1px transparent;
+            background: transparent;
+          }
+          
+          button:hover,
+          input[type="submit"]:hover {
+            border-color: #ccc;
+            background: -webkit-linear-gradient(top, #f2f2f2 0%, #cccccc 99%);
+          }
+          
+          #send #message-form {
+            -webkit-flex: 1;
+            display: -webkit-flex;
+            -webit-flex-direction: column;
+          }
+          
+          #send #center-column {
+            -webkit-flex: 1;
+          }
+          
+          #message {
+            border: solid 1px #ccc;
+            padding: 2px;
+            width: 100%;
+            -webkit-box-sizing: border-box;
+          }
+        </style>
+        <div id="send">
+          <form id="message-form">
+            <div id="center-column">
+              <input id="message" 
+                     type="text" 
+                     bind-value="message"
+                     placeholder="type a message to send"
+                     disabled="{{!enabled}}">
+            </div>
+            <input type="submit" 
+                   value="Send" 
+                   disabled="{{!enabled}}" 
+                   on-click="onSubmit($event)">
+          </form>
+        </div>
+      </template>
+      <script type="application/dart" src="messager.dart"></script>
+    </element>
+  </body>
+</html>
