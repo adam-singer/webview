@@ -9,15 +9,21 @@
   <body>    
     <div>Messages received:</div>  
     
-    <table>
-      <tbody template iterate='message in messages'>
-        <tr>
-          <td>host:</td>
-          <td>{{message[0]}}</td>
-          <td>{{message[1]}}</td>
-        </tr>
-      </tbody>      
-    </table>
+    <div id="receive">
+      <table>
+        <tbody template iterate='message in messages'>
+          <tr>
+            <td>host:</td>
+            <td>{{message[0]}}</td>
+            <td>{{message[1]}}</td>
+          </tr>
+        </tbody>      
+      </table>
+    </div>
+    
+    <div id="send">
+      <div>TODO: send controls</div>
+    </div>
 
     <script type="text/javascript" src="packages/browser/dart.js"></script>
     <script type="application/dart" src="peer.dart"></script>

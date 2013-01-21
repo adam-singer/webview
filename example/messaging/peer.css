@@ -1,8 +1,21 @@
 
-table {
-  border-collapse:collapse;
+html, body {
+    height: 90%;
+}
+
+#receive {
   border:1px solid #FF9900;
-  width:100%;
+  height:80%;
+  overflow:auto;
+}
+
+#send {
+  height:20%;
+  width: 100%;
+}
+
+table {
+  width:100%;  
 }
 
 td {
