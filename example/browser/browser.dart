@@ -1,7 +1,7 @@
 
+import 'dart:async';
 import 'dart:html';
-import 'dart:isolate';
-import 'dart:json';
+import 'dart:json' as json;
 
 main() {
   // xtag is null until the end of the event loop
@@ -52,7 +52,7 @@ onLoad() {
 }
 
 handleExit(event) {
-  var detail = JSON.parse(event.detail);
+  var detail = json.parse(event.detail);
   document.body.classes.add('exited');
   if (detail['reason'] == 'abnormal') {
     document.body.classes.add('crashed');
@@ -64,7 +64,7 @@ handleExit(event) {
 handleLoadAbort(event) { }
 
 handleLoadCommit(event) {
-  var detail = JSON.parse(event.detail);
+  var detail = json.parse(event.detail);
   
   resetExitedState();
   
@@ -79,7 +79,7 @@ handleLoadCommit(event) {
 }
 
 handleLoadRedirect(event) {
-  var detail = JSON.parse(event.detail);
+  var detail = json.parse(event.detail);
   
   resetExitedState();
   
@@ -89,7 +89,7 @@ handleLoadRedirect(event) {
 }
 
 handleLoadStart(event) {
-  var detail = JSON.parse(event.detail);
+  var detail = json.parse(event.detail);
 
   document.body.classes.add('loading');
   isLoading = true;  
