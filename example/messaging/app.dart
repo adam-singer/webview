@@ -1,7 +1,7 @@
 
+import 'dart:async';
 import 'dart:html';
-import 'dart:isolate';
-import 'dart:json';
+import 'dart:json' as json;
 import 'package:js/js.dart' as js;
 import 'package:web_ui/watcher.dart' as watcher;
 
@@ -26,7 +26,7 @@ main() {
 }
 
 onLoadCommit(event) {  
-  var detail = JSON.parse(event.detail);
+  var detail = json.parse(event.detail);
   if (!detail['isTopLevel']) return;
   // Once the embedded content has finished loading, we grab the contentWindow
   // off of the webview and use it to initialize the messager

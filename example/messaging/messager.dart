@@ -2,7 +2,7 @@
 library messager;
 
 import 'dart:html';
-import 'dart:json';
+import 'dart:json' as json;
 import 'package:web_ui/web_ui.dart';
 import 'package:web_ui/watcher.dart' as watcher;
 
@@ -26,7 +26,7 @@ class Messager extends WebComponent {
       // If we don't yet have a target, grab the source of this message.
       if(!hasTarget) target = e.source;
       
-      var data = JSON.parse(e.data);
+      var data = json.parse(e.data);
       var date = new Date.now();
       
       received.addLast([data['sender'], data['message'], 
@@ -35,12 +35,12 @@ class Messager extends WebComponent {
     });
   }
   
-  onSubmit(event) { 
+  send(event) { 
     event.preventDefault();
     var data = new Map();
     data['sender'] = name;
     data['message'] = message;    
-    target.postMessage(JSON.stringify(data), '*');
+    target.postMessage(json.stringify(data), '*');
     message = '';
   }
 }

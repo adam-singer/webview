@@ -4,6 +4,6 @@ description: A web component for the chrome app webview element.
 author: Ross Smith <ross.dart.lang@gmail.com>
 homepage: https://github.com/rmsmith/webview
 dependencies:
-  browser: 0.0.1
-  js: 0.0.13
-  web_ui: 0.2.11
+  browser: any
+  js: 0.0.14
+  web_ui: 0.3.0+1
