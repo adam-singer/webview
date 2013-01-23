@@ -31,5 +31,5 @@ onLoadCommit(event) {
   // Once the embedded content has finished loading, we grab the contentWindow
   // off of the webview and use it to initialize the messager
   var contentWindow = document.query('x-webview').xtag.contentWindow;
-  document.query('x-messager').xtag.target = contentWindow;
+  document.query('x-messenger').xtag.target = contentWindow;
 }

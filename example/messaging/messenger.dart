@@ -1,12 +1,12 @@
 
-library messager;
+library messenger;
 
 import 'dart:html';
 import 'dart:json' as json;
 import 'package:web_ui/web_ui.dart';
 import 'package:web_ui/watcher.dart' as watcher;
 
-class Messager extends WebComponent {
+class Messenger extends WebComponent {
   
   bool get hasTarget => target != null;
   String message = '';
