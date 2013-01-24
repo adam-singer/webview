@@ -14,7 +14,7 @@ in a separate process.  This provides extra security and its storage is isolated
 from the application.  You may obtain the `Webview`'s `contentWindow` and use
 this for bidirectional communication via `postMessage`.
 
-### A Dart Web Component, or, `<x-webview>` vs. `<webview>`
+### A Dart Web Component or `<x-webview>` vs. `<webview>`
 
 The `<webview>` element is the custom element (a web component in its own right)
 that is exposed to Chrome apps.  However, it is not (yet) directly accessible
@@ -28,23 +28,26 @@ expose the entire `<webview>` API in [Dart][] to Chrome apps written in Dart.
 Create an instance of `<x-webview>` following the standard practices of any
 [web component][]:
 
-	1) Add a component link from your application's html `<head>`:
-	`<link rel="components" href="packages/webview/webview.html">`
-	
-	2) Add an element to your html `<body>`:
-	`<x-webview src="{{'http://news.google.com/'}}"></x-webview>`
+1) Add a component link from your application's html `<head>`:
 
-	3) Query the element from your dart `<script>` and make API calls:
-	```dart
+	<link rel="components" href="packages/webview/webview.html">
+	
+2) Add an element to your html `<body>`:
+	
+	<x-webview src="{{'http://news.google.com/'}}"></x-webview>
+
+3) Query the element from your dart `<script>` and make API calls:
+
+```dart
 	var webview = document.query('x-webview').xtag;
 	webview.reload();
-	```
+```
 	
 Explore and run the examples:
 	
-	-[Browser][] is a direct port of the Chrome App's javascript example.
-	-[Messaging][] illustrates bidirectional communication between a Chrome App
-	and the embedded content of a `Webview'.
+-[Browser][] is a direct port of the Chrome App's javascript example.
+-[Messaging][] illustrates bidirectional communication between a Chrome App
+and the embedded content of a `Webview'.
 
 [Browser]: https://github.com/rmsmith/webview/tree/master/example/browser
 [Dart]: http://www.dartlang.org/
