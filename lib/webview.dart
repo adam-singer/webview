@@ -7,6 +7,10 @@ import 'package:js/js.dart' as js;
 import 'package:web_ui/web_ui.dart';
 import 'package:web_ui/watcher.dart' as watcher;
 
+/**
+ * A web component to securely embed content (e.g. a web page) in a Chrome
+ * application.
+ */
 class Webview extends WebComponent {
  
   static const Map _EVENTS = const { 
@@ -61,9 +65,11 @@ class Webview extends WebComponent {
   /// Gets whether this webview instance is available;  The webview is available
   /// once it is inserted in the DOM _and_ the javascript behavior is loaded.
   bool get available => _webview != null;
-         
+
+  /// Gets whether or not this webview can navigate [back].
   bool get canGoBack => _call(() => _webview.canGoBack());
   
+  /// Gets whether or not this webview can navigate [forward].
   bool get canGoForward => _call(() => _webview.canGoForward());
   
   _Window _contentWindow;
@@ -75,11 +81,12 @@ class Webview extends WebComponent {
     return _contentWindow;
   }
   
+  /// Gets the process id of this webview.
   int get processId => _call(() => _webview.getProcessId());
   
   js.Callback _onEvent;
   js.Proxy _webview;
-  
+
   void inserted() {
     _inject(() {
       js.scoped(() {
@@ -99,14 +106,20 @@ class Webview extends WebComponent {
     });
   }
 
+  /// Navigate back one step in this webview's history.
   void back() => _call(() => _webview.back());  
   
+  /// Navigate forward one step in this webview's history.
   void forward() => _call(() => _webview.forward());
   
+  /// Reload the content of this webview.
   void reload() => _call(() => _webview.reload());  
   
+  /// Stops this webview if it is currently loading content.
   void stop() => _call(() => _webview.stop());  
   
+  /// Termintates this webview.
+  // TODO(rms): need better documentation but it is not obvious from the js.
   void terminate() => _call(() => _webview.terminate());
   
   _call(f()) {
