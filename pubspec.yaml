@@ -1,6 +1,6 @@
 name: webview
-version: 0.0.4
-description: A web component for the chrome app webview element.
+version: 0.0.5-dev
+description: A web component for the chrome webview element.
 author: Ross Smith <ross.dart.lang@gmail.com>
 homepage: https://github.com/rmsmith/webview
 dependencies:
