@@ -118,7 +118,7 @@ class Webview extends WebComponent {
   /// Stops this webview if it is currently loading content.
   void stop() => _call(() => _webview.stop());  
   
-  /// Termintates this webview.
+  /// Terminates this webview.
   // TODO(rms): need better documentation but it is not obvious from the js.
   void terminate() => _call(() => _webview.terminate());
   
