@@ -1,7 +1,9 @@
 # Webview
 
-A Dart [web component][] for the Chrome App [webview][] element. Webview uses 
-the MIT license as described in the LICENSE file, and [semantic versioning][].
+A Dart [web component][] for the Chrome App [webview][] element.
+
+Webview uses the MIT license as described in the LICENSE file, and 
+[semantic versioning][].
 
 ## The `Webview` Element
 
