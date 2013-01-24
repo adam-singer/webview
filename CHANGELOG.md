@@ -1,6 +1,9 @@
 # Webview Changes
 
-## 0.0.4-dev
+## 0.0.4
+
+- README and dartdoc additions and improvements.
+- Updated to SDK 0.3.1_r17328.
 
 ## 0.0.3
 
