@@ -45,8 +45,8 @@ Create an instance of `<x-webview>` following the standard practices of any
 	
 Explore and run the examples:
 	
--[Browser][] is a direct port of the Chrome App's javascript example.
--[Messaging][] illustrates bidirectional communication between a Chrome App
+- [Browser][] is a direct port of the Chrome App's javascript example.
+- [Messaging][] illustrates bidirectional communication between a Chrome App
 and the embedded content of a `Webview'.
 
 [Browser]: https://github.com/rmsmith/webview/tree/master/example/browser
