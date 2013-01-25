@@ -1,20 +1,13 @@
 # Webview
 
-A Dart [web component][] for the Chrome App [webview][] element.
+The `<webview>` element allows you to embed external content (e.g. a web page) 
+in your [Chrome app][webview].  The `<iframe>` element is disabled in Chrome 
+apps, and this is its replacement.  Contrary to an `<iframe>`, a `Webview` 
+displays its content in a separate process.  This provides extra security and 
+its storage is isolated from the application.  You may obtain the `Webview`'s 
+`contentWindow` and use this for bidirectional communication via `postMessage`.
 
-Webview uses the MIT license as described in the LICENSE file, and 
-[semantic versioning][].
-
-## The `Webview` Element
-
-The `<webview>` tag allows you to embed external content (e.g. a web page) in
-your Chrome app.  The `<iframe>` element is disabled in Chrome apps, and this is
-its replacement.  Contrary to an `<iframe>`, a `Webview` displays its content
-in a separate process.  This provides extra security and its storage is isolated
-from the application.  You may obtain the `Webview`'s `contentWindow` and use
-this for bidirectional communication via `postMessage`.
-
-### A Dart Web Component or `<x-webview>` vs. `<webview>`
+## A Dart Web Component or `<x-webview>` vs. `<webview>`
 
 The `<webview>` element is the custom element (a web component in its own right)
 that is exposed to Chrome apps.  However, it is not (yet) directly accessible
@@ -43,11 +36,14 @@ Create an instance of `<x-webview>` following the standard practices of any
 	webview.reload();
 ```
 	
-Explore and run the examples:
+## Explore and run the examples:
 	
 - [Browser][] is a direct port of the Chrome App's javascript example.
 - [Messaging][] illustrates bidirectional communication between a Chrome App
 and the embedded content of a `Webview'.
+
+_Webview uses the MIT license as described in the LICENSE file, and 
+[semantic versioning][]._
 
 [Browser]: https://github.com/rmsmith/webview/tree/master/example/browser
 [Dart]: http://www.dartlang.org/
