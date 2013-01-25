@@ -36,7 +36,7 @@ Create an instance of `<x-webview>` following the standard practices of any
 	webview.reload();
 ```
 	
-## Explore and run the examples:
+## Explore the Examples:
 	
 - [Browser][] is a direct port of the Chrome App's javascript example.
 - [Messaging][] illustrates bidirectional communication between a Chrome App
