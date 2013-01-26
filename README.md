@@ -42,9 +42,15 @@ Create an instance of `<x-webview>` following the standard practices of any
 - [Messaging][] illustrates bidirectional communication between a Chrome App
 and the embedded content of a `Webview'.
 
+## Further Reading:
+
+For more insight as to _how_ and _why_ this component was developed, read this
+[article].
+
 _Webview uses the MIT license as described in the LICENSE file, and 
 [semantic versioning][]._
 
+[article]: http://rmsmith.github.com/2013/01/25/webview.html
 [Browser]: https://github.com/rmsmith/webview/tree/master/example/browser
 [Dart]: http://www.dartlang.org/
 [Messaging]: https://github.com/rmsmith/webview/tree/master/example/messaging
