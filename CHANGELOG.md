@@ -1,6 +1,8 @@
 # Webview Changes
 
-## 0.0.5-dev
+## 0.1.0
+
+- More documentation and published an [article][].
 
 ## 0.0.4
 
@@ -33,4 +35,5 @@ entry point html:
 
 - Initial release.
 
+[article]: http://rmsmith.github.com/2013/01/25/webview.html
 [messaging]: https://github.com/rmsmith/webview/tree/master/example/messaging
