@@ -40,7 +40,7 @@ Create an instance of `<x-webview>` following the standard practices of any
 	
 - [Browser][] is a direct port of the Chrome App's javascript example.
 - [Messaging][] illustrates bidirectional communication between a Chrome App
-and the embedded content of a `Webview'.
+and the embedded content of a `Webview`.
 
 ## Further Reading:
 
