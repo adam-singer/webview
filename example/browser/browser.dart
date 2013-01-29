@@ -14,13 +14,13 @@ onLoad() {
   
   var webview = document.query('x-webview').xtag;
   
-  document.query('#back').on.click.add((e) => webview.back());  
-  document.query('#forward').on.click.add((e) => webview.forward());
+  document.query('#back').onClick.listen((e) => webview.back());  
+  document.query('#forward').onClick.listen((e) => webview.forward());
   
-  document.query('#home').on.click.add((e) => 
+  document.query('#home').onClick.listen((e) => 
       navigateTo('http://www.google.com/'));
   
-  document.query('#reload').on.click.add((e) {
+  document.query('#reload').onClick.listen((e) {
     if (isLoading) {
       webview.stop();
     } else {
@@ -36,19 +36,19 @@ onLoad() {
       }
   });
   
-  document.query('#terminate').on.click.add((e) => webview.terminate());
+  document.query('#terminate').onClick.listen((e) => webview.terminate());
     
-  document.query('#location-form').on.submit.add((e) {
+  document.query('#location-form').onSubmit.listen((e) {
     e.preventDefault();
     navigateTo((document.query('#location') as InputElement).value);
   });
   
-  webview.on['exit'].add(handleExit);
-  webview.on['loadabort'].add(handleLoadAbort);
-  webview.on['loadcommit'].add(handleLoadCommit);
-  webview.on['loadredirect'].add(handleLoadRedirect);
-  webview.on['loadstart'].add(handleLoadStart);
-  webview.on['loadstop'].add(handleLoadStop);
+  Webview.onExit.forTarget(webview).listen(handleExit);
+  Webview.onLoadAbort.forTarget(webview).listen(handleLoadAbort);
+  Webview.onLoadCommit.forTarget(webview).listen(handleLoadCommit);
+  Webview.onLoadRedirect.forTarget(webview).listen(handleLoadRedirect);
+  Webview.onLoadStart.forTarget(webview).listen(handleLoadStart);
+  Webview.onLoadStop.forTarget(webview).listen(handleLoadStop);
 }
 
 handleExit(event) {
@@ -65,7 +65,7 @@ handleLoadAbort(event) { }
 
 handleLoadCommit(event) {
   var detail = json.parse(event.detail);
-  
+
   resetExitedState();
   
   if (!detail['isTopLevel']) return;
@@ -80,7 +80,7 @@ handleLoadCommit(event) {
 
 handleLoadRedirect(event) {
   var detail = json.parse(event.detail);
-  
+
   resetExitedState();
   
   if (!detail['isTopLevel']) return;
@@ -90,7 +90,6 @@ handleLoadRedirect(event) {
 
 handleLoadStart(event) {
   var detail = json.parse(event.detail);
-
   document.body.classes.add('loading');
   isLoading = true;  
   resetExitedState();

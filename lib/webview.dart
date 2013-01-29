@@ -13,6 +13,24 @@ import 'package:web_ui/watcher.dart' as watcher;
  */
 class Webview extends WebComponent {
  
+  static const EventStreamProvider<CustomEvent> onExit = 
+      const EventStreamProvider<CustomEvent>('exit');
+  
+  static const EventStreamProvider<CustomEvent> onLoadAbort = 
+      const EventStreamProvider<CustomEvent>('loadabort');
+  
+  static const EventStreamProvider<CustomEvent> onLoadCommit = 
+      const EventStreamProvider<CustomEvent>('loadcommit');
+  
+  static const EventStreamProvider<CustomEvent> onLoadRedirect = 
+      const EventStreamProvider<CustomEvent>('loadredirect');
+  
+  static const EventStreamProvider<CustomEvent> onLoadStart = 
+      const EventStreamProvider<CustomEvent>('loadstart');
+  
+  static const EventStreamProvider<CustomEvent> onLoadStop = 
+      const EventStreamProvider<CustomEvent>('loadstop');
+  
   static const Map _EVENTS = const { 
     'exit' : const ['processId', 'reason'],
     'loadabort' : const ['url', 'isTopLevel', 'reason'],
@@ -44,11 +62,11 @@ class Webview extends WebComponent {
         var script = new ScriptElement();
         script.type = "text/javascript";
         script.src = "packages/webview/webview.js";
-        script.on.load.add((e) {
+        script.onLoad.listen((e) {
           // Script loaded, check support and continue.
           _supported = js.scoped(() => js.context.isWebviewSupported());
           then();
-        });    
+        });
         document.body.append(script);
         _injected = true;
       }
@@ -146,8 +164,9 @@ class Webview extends WebComponent {
         case 'url': detail['url'] = e.url; break;
       }
     }
-    on[e.type].dispatch(
-      new CustomEvent(e.type, e.bubbles, e.cancelable, json.stringify(detail))); 
+    dispatchEvent(
+      new CustomEvent(e.type, canBubble: e.bubbles, cancelable: e.cancelable, 
+          detail: json.stringify(detail))); 
   }
 }
 

@@ -22,7 +22,7 @@ class Messenger extends WebComponent {
              }
   
   void inserted() {
-    window.on.message.add((e) {             
+    window.onMessage.listen((e) {             
       // If we don't yet have a target, grab the source of this message.
       if(!hasTarget) target = e.source;
       

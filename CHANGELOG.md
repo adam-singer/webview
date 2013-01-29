@@ -2,6 +2,14 @@
 
 ## 0.1.1-dev
 
+- Webview custom events are now exposed as 
+`static const EventStreamProvider<CustomEvent>`.  To listen to one of these 
+events, e.g. the `onExit` event, you will want to do the following:
+
+	Webview.onExit.forTarget(webview).listen((e) { /* do something */} );
+
+- Updated to SDK 0.3.2_r17657.
+
 ## 0.1.0
 
 - More documentation and published an [article][].
