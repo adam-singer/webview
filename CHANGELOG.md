@@ -1,6 +1,6 @@
 # Webview Changes
 
-## 0.1.1-dev
+## 0.1.1
 
 - Webview custom events are now exposed as `Stream<CustomEvent>` `on*` instance
 member getters.  To listen to one of these events, e.g. the `onExit` event, you 
