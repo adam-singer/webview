@@ -1,6 +1,7 @@
 
 library webview;
 
+import 'dart:async';
 import 'dart:html';
 import 'dart:json' as json;
 import 'package:js/js.dart' as js;
@@ -13,22 +14,22 @@ import 'package:web_ui/watcher.dart' as watcher;
  */
 class Webview extends WebComponent {
  
-  static const EventStreamProvider<CustomEvent> onExit = 
+  static const EventStreamProvider<CustomEvent> exitEvent = 
       const EventStreamProvider<CustomEvent>('exit');
-  
-  static const EventStreamProvider<CustomEvent> onLoadAbort = 
+   
+  static const EventStreamProvider<CustomEvent> loadAbortEvent = 
       const EventStreamProvider<CustomEvent>('loadabort');
   
-  static const EventStreamProvider<CustomEvent> onLoadCommit = 
+  static const EventStreamProvider<CustomEvent> loadCommitEvent = 
       const EventStreamProvider<CustomEvent>('loadcommit');
   
-  static const EventStreamProvider<CustomEvent> onLoadRedirect = 
+  static const EventStreamProvider<CustomEvent> loadRedirectEvent = 
       const EventStreamProvider<CustomEvent>('loadredirect');
   
-  static const EventStreamProvider<CustomEvent> onLoadStart = 
+  static const EventStreamProvider<CustomEvent> loadStartEvent = 
       const EventStreamProvider<CustomEvent>('loadstart');
   
-  static const EventStreamProvider<CustomEvent> onLoadStop = 
+  static const EventStreamProvider<CustomEvent> loadStopEvent = 
       const EventStreamProvider<CustomEvent>('loadstop');
   
   static const Map _EVENTS = const { 
@@ -73,6 +74,13 @@ class Webview extends WebComponent {
     }
   }
 
+  Stream<CustomEvent> get onExit => exitEvent.forTarget(this);
+  Stream<CustomEvent> get onLoadAbort => loadAbortEvent.forTarget(this);
+  Stream<CustomEvent> get onLoadCommit => loadCommitEvent.forTarget(this);
+  Stream<CustomEvent> get onLoadRedirect => loadRedirectEvent.forTarget(this);
+  Stream<CustomEvent> get onLoadStart => loadStartEvent.forTarget(this);
+  Stream<CustomEvent> get onLoadStop => loadStopEvent.forTarget(this);
+  
   String _src = '';
   /// Reflects the src HTML attribute, containing the address of the content to
   /// be embedded.

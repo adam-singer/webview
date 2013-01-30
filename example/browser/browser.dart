@@ -43,12 +43,12 @@ onLoad() {
     navigateTo((document.query('#location') as InputElement).value);
   });
   
-  Webview.onExit.forTarget(webview).listen(handleExit);
-  Webview.onLoadAbort.forTarget(webview).listen(handleLoadAbort);
-  Webview.onLoadCommit.forTarget(webview).listen(handleLoadCommit);
-  Webview.onLoadRedirect.forTarget(webview).listen(handleLoadRedirect);
-  Webview.onLoadStart.forTarget(webview).listen(handleLoadStart);
-  Webview.onLoadStop.forTarget(webview).listen(handleLoadStop);
+  webview.onExit.listen(handleExit);
+  webview.onLoadAbort.listen(handleLoadAbort);
+  webview.onLoadCommit.listen(handleLoadCommit);
+  webview.onLoadRedirect.listen(handleLoadRedirect);
+  webview.onLoadStart.listen(handleLoadStart);
+  webview.onLoadStop.listen(handleLoadStop);
 }
 
 handleExit(event) {

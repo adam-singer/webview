@@ -11,7 +11,7 @@ main() {
   // xtag is null until the end of the event loop (known dart web ui issue)
   new Timer(0, (t) {
     var webview = document.query('x-webview').xtag;    
-    Webview.onLoadCommit.forTarget(webview).listen(onLoadCommit);
+    webview.onLoadCommit.listen(onLoadCommit);
         
     // TODO(rms): We would like to build a content url of the form:
     // 'chrome-extension://<extensionID>/<pathToFile>' as described:
