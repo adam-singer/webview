@@ -73,13 +73,6 @@ class Webview extends WebComponent {
       }
     }
   }
-
-  Stream<CustomEvent> get onExit => exitEvent.forTarget(this);
-  Stream<CustomEvent> get onLoadAbort => loadAbortEvent.forTarget(this);
-  Stream<CustomEvent> get onLoadCommit => loadCommitEvent.forTarget(this);
-  Stream<CustomEvent> get onLoadRedirect => loadRedirectEvent.forTarget(this);
-  Stream<CustomEvent> get onLoadStart => loadStartEvent.forTarget(this);
-  Stream<CustomEvent> get onLoadStop => loadStopEvent.forTarget(this);
   
   String _src = '';
   /// Reflects the src HTML attribute, containing the address of the content to
@@ -106,6 +99,13 @@ class Webview extends WebComponent {
     }
     return _contentWindow;
   }
+
+  Stream<CustomEvent> get onExit => exitEvent.forTarget(this);
+  Stream<CustomEvent> get onLoadAbort => loadAbortEvent.forTarget(this);
+  Stream<CustomEvent> get onLoadCommit => loadCommitEvent.forTarget(this);
+  Stream<CustomEvent> get onLoadRedirect => loadRedirectEvent.forTarget(this);
+  Stream<CustomEvent> get onLoadStart => loadStartEvent.forTarget(this);
+  Stream<CustomEvent> get onLoadStop => loadStopEvent.forTarget(this);
   
   /// Gets the process id of this webview.
   int get processId => _call(() => _webview.getProcessId());
