@@ -5,7 +5,7 @@
 - Webview custom events are now exposed as `Stream<CustomEvent>` `on*` instance
 member getters.  To listen to one of these events, e.g. the `onExit` event, you 
 will want to do the following:
-    `webview.onExit.listen((e) { /* do something */} );`
+`webview.onExit.listen((e) { /* do something */} );`
 - Updated to SDK 0.3.2_r17657.
 
 ## 0.1.0
