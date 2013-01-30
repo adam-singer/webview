@@ -32,7 +32,7 @@ class Webview extends WebComponent {
   static const EventStreamProvider<CustomEvent> loadStopEvent = 
       const EventStreamProvider<CustomEvent>('loadstop');
   
-  static const Map _EVENTS = const { 
+  static const Map _EVENT_DETAIL = const { 
     'exit' : const ['processId', 'reason'],
     'loadabort' : const ['url', 'isTopLevel', 'reason'],
     'loadcommit' : const ['url', 'isTopLevel'],
@@ -101,10 +101,15 @@ class Webview extends WebComponent {
   }
 
   Stream<CustomEvent> get onExit => exitEvent.forTarget(this);
+  
   Stream<CustomEvent> get onLoadAbort => loadAbortEvent.forTarget(this);
+  
   Stream<CustomEvent> get onLoadCommit => loadCommitEvent.forTarget(this);
+  
   Stream<CustomEvent> get onLoadRedirect => loadRedirectEvent.forTarget(this);
+  
   Stream<CustomEvent> get onLoadStart => loadStartEvent.forTarget(this);
+  
   Stream<CustomEvent> get onLoadStop => loadStopEvent.forTarget(this);
   
   /// Gets the process id of this webview.
@@ -157,9 +162,8 @@ class Webview extends WebComponent {
   bool _dispatch(e) {
     // TODO(rms): explore better ways to do this
     var detail = new Map();
-    var props = _EVENTS[e.type];
-    for(var p in props) {      
-      switch(p) {
+    for(var d in _EVENT_DETAIL[e.type]) {      
+      switch(d) {
         case 'isTopLevel' : detail['isTopLevel'] = e.isTopLevel; break;  
         case 'oldHeight' : detail['oldHeight'] = e.oldHeight; break;
         case 'oldUrl' : detail['oldUrl'] = e.oldUrl; break;
