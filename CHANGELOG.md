@@ -1,6 +1,8 @@
 # Webview Changes
 
-## 0.1.2-dev
+## 0.1.2
+
+- Updated to `web_ui` 0.3.1+3 and loosened `web_ui` version constraint.
 
 ## 0.1.1
 

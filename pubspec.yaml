@@ -1,5 +1,5 @@
 name: webview
-version: 0.1.2-dev
+version: 0.1.2
 description: A web component for the chrome webview element.
 author: Ross Smith <ross.dart.lang@gmail.com>
 homepage: https://github.com/rmsmith/webview
